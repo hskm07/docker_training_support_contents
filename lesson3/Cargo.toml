@@ -6,3 +6,7 @@ edition = "2018"
 
 # 依存関係
 [dependencies]
+
+[[bin]]
+name = "your_project_name"
+path = "src/main.rs"
