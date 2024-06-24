@@ -2,11 +2,16 @@ FROM golang:1.18
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+# Goモジュールファイルをコピー
+COPY go.mod go.sum ./
+# 依存関係をダウンロード
 RUN go mod download
 
-COPY . ./
+# ソースコードをコピー
+COPY . .
+
+# 依存関係を整理し、go.sumを更新
+RUN go mod tidy
 
 RUN go build -o main .
 
