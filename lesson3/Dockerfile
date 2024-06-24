@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y pkg-config libssl-dev
 # 作業ディレクトリを設定
 WORKDIR /app
 
-# Rustの依存関係をキャッシュするためにまずCargo.tomlとCargo.lockをコピー
-COPY Cargo.toml Cargo.lock ./
+# Rustの依存関係をキャッシュするためにまずCargo.tomlをコピー
+COPY Cargo.toml ./
 RUN cargo build --release
 RUN rm -rf src
 
