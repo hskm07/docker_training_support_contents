@@ -8,5 +8,5 @@ edition = "2018"
 [dependencies]
 
 [[bin]]
-name = "your_project_name"
+name = "my_rust_cli"
 path = "src/main.rs"
