@@ -9,8 +9,6 @@ WORKDIR /app
 
 # Rustの依存関係をキャッシュするためにまずCargo.tomlをコピー
 COPY Cargo.toml ./
-RUN cargo build --release
-RUN rm -rf src
 
 # アプリケーションのソースコードをコピー
 COPY src ./src
