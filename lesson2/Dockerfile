@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.10-slim-bullseye
 WORKDIR /usr/src/app
 
 ENV FLASK_APP=app
