@@ -10,6 +10,11 @@ import (
 	"gorm.io/gorm"
 )
 
+type User struct {
+	ID   uint   `gorm:"primaryKey"`
+	Name string `gorm:"size:255"`
+}
+
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
@@ -18,6 +23,11 @@ func main() {
 	dsn := os.Getenv("DATABASE_URL")
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
+		e.Logger.Fatal(err)
+	}
+
+	// 自動マイグレーションを実行して、User テーブルを作成する
+	if err := db.AutoMigrate(&User{}); err != nil {
 		e.Logger.Fatal(err)
 	}
 
