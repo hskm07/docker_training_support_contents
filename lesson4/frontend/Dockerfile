@@ -6,13 +6,10 @@ WORKDIR /app
 
 # 必要なパッケージのインストール
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # アプリケーションファイルのコピー
 COPY . /app
 
-# ストリームリットを外部アクセス可能にするための設定
-EXPOSE 8501
-
-# アプリケーションの起動
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# コンテナ起動時に実行されるコマンドを設定
+CMD ["python", "app.py"]
