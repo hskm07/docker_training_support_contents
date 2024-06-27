@@ -1,26 +1,27 @@
-# ビルドステージ
-FROM golang:1.18 as builder
+FROM golang:1.19 as builder
 
 WORKDIR /app
 
-# Goモジュールファイルをコピー
-COPY go.mod go.sum ./
-# 依存関係をダウンロード
-RUN go mod download
-
 # ソースコードをコピー
-COPY . .
+COPY main.go .
 
-# 依存関係を整理し、go.sumを更新
-RUN go mod tidy
+# Goモジュールを初期化し、依存関係を整理
+RUN go mod init main \
+ && go mod tidy
 
 # バイナリをビルド
 RUN go build -o main .
 
-ENV CGO_ENABLED=0 \
-  GOOS=linux \
-  GOARCH=amd64
+# 実行ステージ
+FROM golang:1.19
 
+WORKDIR /app
+
+# ビルドしたバイナリをコピー
+COPY --from=builder /app/main /app/main
+
+# ポートを公開
 EXPOSE 8080
 
-CMD ["go", "run", "main.go"]
+# バイナリを実行
+CMD ["./main"]

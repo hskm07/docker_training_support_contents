@@ -5,7 +5,7 @@ services:
     build: ./frontend
     container_name: frontend
     volumes:
-      - ./frontend:/app
+      - ./frontend/data:/app/data
     ports:
       - "5000:5000"
 
@@ -13,7 +13,7 @@ services:
     build: ./backend
     container_name: backend
     volumes:
-      - ./backend:/app
+      - ./backend/data:/app/data
     ports:
       - "8080:8080"
     depends_on:
