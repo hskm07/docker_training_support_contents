@@ -17,16 +17,10 @@ RUN go mod tidy
 # バイナリをビルド
 RUN go build -o main .
 
-# 実行ステージ
-FROM alpine:latest
+ENV CGO_ENABLED=0 \
+  GOOS=linux \
+  GOARCH=amd64
 
-WORKDIR /app
-
-# ビルドしたバイナリをコピー
-COPY --from=builder /app/main .
-
-# ポートを公開
 EXPOSE 8080
 
-# バイナリを実行
-CMD ["./main"]
+CMD ["go", "run", "main.go"]
